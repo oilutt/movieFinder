@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2e2f30</color>
+    <color name="colorPrimaryDark">#262727</color>
+    <color name="colorAccent">#56ccf2</color>
+
+    <color name="colorPrimaryLight">#1C1C1E</color>
+    <color name="colorPrimaryLightEdt">#797A7C</color>
+    <color name="colorBackgroundLoading">#EE797A7C</color>
+    <color name="colorLoadingText">#1C1C1E</color>
+
+    <color name="colorPrimaryDark80">#c81A1A1A</color>
+    <color name="colorPrimaryDark50">#801A1A1A</color>
+    <color name="colorPrimaryText">#FDFEFF</color>
+    <color name="colorPrimaryText2">#797A7C</color>
+
+    <color name="bg_progress">#C2C0B3</color>
+    <color name="progress">#9F9C88</color>
+    <color name="backgroundColor">#f5f5f5</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="fbColor">#3b5998</color>
+    <color name="blackButton">#1e1f1f</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="colorPrimaryEdt">#80000000</color>
+    <color name="colorHintEdt">#c7c7c7</color>
+    <color name="colorPrimaryDarkDarker">#1e1f1f</color>
+    <color name="colorPrimaryDarkDarkerDarker">#161616</color>
+
+    <color name="cinza">#828282</color>
+</resources>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Movie Finder</string>
+
+    <string name="error">Um erro ocorreu&#8230;</string>
+    <string name="ok">OK</string>
+
+    <string name="order_by">Ordenar por</string>
+    <string name="popularity_desc">Maior popularidade</string>
+    <string name="average_desc">Melhor avaliado</string>
+    <string name="release_desc">Data de lançamento</string>
+    <string name="filter">Filtrar</string>
+    <string name="clear">Limpar</string>
+    <string name="imdb">IMDB:</string>
+    <string name="popularity">Popularidade:</string>
+    <string name="duration">Duração:</string>
+
+    <string name="montserratBold">assets/Montserrat-Bold.ttf</string>
+    <string name="montserratRegular">assets/Montserrat-Regular.ttf</string>
+    <string name="montserratMedium">assets/Montserrat-Medium.ttf</string>
+</resources>
