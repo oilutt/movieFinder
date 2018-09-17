@@ -9,6 +9,10 @@ import android.widget.Toast;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -16,6 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 import oilutt.sambatechproject.R;
 import oilutt.sambatechproject.app.Constants;
 import oilutt.sambatechproject.model.DiscoverResponse;
+import oilutt.sambatechproject.model.Movie;
 import oilutt.sambatechproject.presentation.view.MainActivityPresenterView;
 import oilutt.sambatechproject.utils.DateTimeUtil;
 import oilutt.sambatechproject.utils.PreferencesManager;
@@ -77,20 +82,22 @@ public class MainActivityPresenter extends MvpPresenter<MainActivityPresenterVie
     }
 
     public void getNextPage() {
-        getViewState().showLoading();
-        switch (orderBy) {
-            case 0:
-                getMovies();
-                break;
-            case R.id.rb_popularity:
-                getMoviesOrderBy(Constants.SortBy.POPULARITY);
-                break;
-            case R.id.rb_average_votes:
-                getMoviesOrderBy(Constants.SortBy.RATE);
-                break;
-            case R.id.rb_release:
-                getMoviesOrderBy(Constants.SortBy.RELEASE);
-                break;
+        if(!fav) {
+            getViewState().showLoading();
+            switch (orderBy) {
+                case 0:
+                    getMovies();
+                    break;
+                case R.id.rb_popularity:
+                    getMoviesOrderBy(Constants.SortBy.POPULARITY);
+                    break;
+                case R.id.rb_average_votes:
+                    getMoviesOrderBy(Constants.SortBy.RATE);
+                    break;
+                case R.id.rb_release:
+                    getMoviesOrderBy(Constants.SortBy.RELEASE);
+                    break;
+            }
         }
     }
 
@@ -102,30 +109,36 @@ public class MainActivityPresenter extends MvpPresenter<MainActivityPresenterVie
                 orderBy = data.getIntExtra(Constants.Extras.ORDER_BY, 0);
                 fav = data.getBooleanExtra(Constants.Extras.FILTER_BY, false);
                 page = 0;
-                switch (orderBy) {
-                    case -1:
-                        if(!fav) {
+                if (!fav) {
+                    switch (orderBy) {
+                        case 0:
                             getMovies();
-                        } else {
+                            break;
+                        case R.id.rb_popularity:
+                            getMoviesOrderBy(Constants.SortBy.POPULARITY);
+                            break;
+                        case R.id.rb_average_votes:
+                            getMoviesOrderBy(Constants.SortBy.RATE);
+                            break;
+                        case R.id.rb_release:
+                            getMoviesOrderBy(Constants.SortBy.RELEASE);
+                            break;
+                    }
+                } else {
+                    switch (orderBy) {
+                        case -1:
                             getFavMovies();
-                        }
-                        break;
-                    case 0:
-                        if(!fav) {
-                            getMovies();
-                        } else {
-                            getFavMovies();
-                        }
-                        break;
-                    case R.id.rb_popularity:
-                        getMoviesOrderBy(Constants.SortBy.POPULARITY);
-                        break;
-                    case R.id.rb_average_votes:
-                        getMoviesOrderBy(Constants.SortBy.RATE);
-                        break;
-                    case R.id.rb_release:
-                        getMoviesOrderBy(Constants.SortBy.RELEASE);
-                        break;
+                            break;
+                        case R.id.rb_popularity:
+                            getFavMoviesOrderBy(Constants.SortBy.POPULARITY);
+                            break;
+                        case R.id.rb_average_votes:
+                            getFavMoviesOrderBy(Constants.SortBy.RATE);
+                            break;
+                        case R.id.rb_release:
+                            getFavMoviesOrderBy(Constants.SortBy.RELEASE);
+                            break;
+                    }
                 }
             }
         }
@@ -203,6 +216,33 @@ public class MainActivityPresenter extends MvpPresenter<MainActivityPresenterVie
     private void getFavMovies() {
         new Handler().postDelayed(() -> {
             adapter = new MoviesAdapter(PreferencesManager.getInstance().getFavMovies(), mContext);
+            getViewState().stopShimmer();
+            getViewState().setAdapter(adapter);
+        }, 1000);
+    }
+
+    private void getFavMoviesOrderBy(String orderBy) {
+        List<Movie> list = PreferencesManager.getInstance().getFavMovies();
+        switch (orderBy) {
+            case Constants.SortBy.POPULARITY:
+                Collections.sort(list, (o1, o2) -> Double.compare(o1.getPopularity(), o2.getPopularity()));
+                break;
+            case Constants.SortBy.RATE:
+                Collections.sort(list, (o1, o2) -> Double.compare(o1.getVoteAverage(), o2.getVoteAverage()));
+                break;
+            case Constants.SortBy.RELEASE:
+                Collections.sort(list, (o1, o2) -> {
+                    try {
+                        return DateTimeUtil.parseDate(o1.getReleaseDate(), DateTimeUtil.PATTERN_DATE_DB)
+                                .compareTo(DateTimeUtil.parseDate(o2.getReleaseDate(), DateTimeUtil.PATTERN_DATE_DB));
+                    } catch (Exception e) {
+                        return -1;
+                    }
+                });
+                break;
+        }
+        new Handler().postDelayed(() -> {
+            adapter = new MoviesAdapter(list, mContext);
             getViewState().stopShimmer();
             getViewState().setAdapter(adapter);
         }, 1000);
