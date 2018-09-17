@@ -2,14 +2,17 @@ package oilutt.sambatechproject.utils;
 
 import android.text.TextUtils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public final class DateTimeUtil {
     public static final String PATTERN_DATE_DB = "yyyy-MM-dd";
+    private static final Locale DEFAULT_LOCALE = Locale.getDefault();
 
 
     private DateTimeUtil() {
@@ -88,6 +91,32 @@ public final class DateTimeUtil {
             }
         }
         throw new ParseException("Unable to parse the date: " + str, -1);
+    }
+
+    /**
+     * Gets the actual date.
+     * <p/>
+     * This method don't validate the date.
+     *
+     * @return The Actual date, without time, in {@code String}.
+     */
+    public static String getDateNowString() {
+        return getDateTimeNow(PATTERN_DATE_DB, false);
+    }
+
+    /**
+     * Gets the actual datetime
+     *
+     * @param format  The date format.
+     * @param lenient true if need to validate the date.
+     * @return The actual Datetime in {@code String}.
+     */
+    private static String getDateTimeNow(String format, boolean lenient) {
+        Calendar c = Calendar.getInstance();
+        DateFormat formatter = new SimpleDateFormat(format, DEFAULT_LOCALE);
+        formatter.setLenient(lenient);
+
+        return formatter.format(c.getTime());
     }
 
     /**

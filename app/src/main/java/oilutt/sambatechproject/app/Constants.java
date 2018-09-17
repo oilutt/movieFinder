@@ -9,6 +9,7 @@ public class Constants {
     public class SharedPreferences {
         public static final String PREFERENCES_NAME = "sambatechproject_ppreferences";
         public static final String CONFIG = "CONFIG";
+        public static final String LIST_FAV_MOVIES = "LIST_FAV_MOVIES";
     }
 
     public class Retrofit {
@@ -21,6 +22,7 @@ public class Constants {
         public static final String ID_MOVIE = "ID_MOVIE";
         public static final String NAME_MOVIE = "NAME_MOVIE";
         public static final String ORDER_BY = "ORDER_BY";
+        public static final String FILTER_BY = "FILTER_BY";
         public static final String PATH_MOVIE = "PATH_MOVIE";
     }
 

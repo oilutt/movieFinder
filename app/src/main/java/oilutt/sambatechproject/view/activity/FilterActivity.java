@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -25,6 +26,8 @@ public class FilterActivity extends BaseActivity implements FilterActivityPresen
     View rootLayout;
     @BindView(R.id.rg_order_by)
     RadioGroup rgOrderBy;
+    @BindView(R.id.rb_fav)
+    RadioButton rbFav;
 
     @InjectPresenter
     FilterActivityPresenter presenter;
@@ -71,6 +74,7 @@ public class FilterActivity extends BaseActivity implements FilterActivityPresen
     public void onClickFilter() {
         Intent intent = new Intent();
         intent.putExtra(Constants.Extras.ORDER_BY, rgOrderBy.getCheckedRadioButtonId());
+        intent.putExtra(Constants.Extras.FILTER_BY, rbFav.isChecked());
         setResult(Activity.RESULT_OK, intent);
         finish();
     }

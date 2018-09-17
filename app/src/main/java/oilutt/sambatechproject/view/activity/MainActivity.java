@@ -21,6 +21,8 @@ import oilutt.sambatechproject.presentation.presenter.MainActivityPresenter;
 import oilutt.sambatechproject.presentation.view.MainActivityPresenterView;
 import oilutt.sambatechproject.view.adapter.MoviesAdapter;
 
+import static android.view.View.GONE;
+
 public class MainActivity extends BaseActivity implements MainActivityPresenterView {
 
     @BindView(R.id.rv_movies)
@@ -99,11 +101,12 @@ public class MainActivity extends BaseActivity implements MainActivityPresenterV
 
     @Override
     public void hideLoading() {
-        loading.setVisibility(View.GONE);
+        loading.setVisibility(GONE);
     }
 
     @Override
     public void startShimmer() {
+        rvMovies.setVisibility(GONE);
         shimmerFrameLayout.setVisibility(View.VISIBLE);
         shimmerFrameLayout.startShimmer();
     }
@@ -111,6 +114,7 @@ public class MainActivity extends BaseActivity implements MainActivityPresenterV
     @Override
     public void stopShimmer() {
         shimmerFrameLayout.stopShimmer();
-        shimmerFrameLayout.setVisibility(View.GONE);
+        shimmerFrameLayout.setVisibility(GONE);
+        rvMovies.setVisibility(View.VISIBLE);
     }
 }

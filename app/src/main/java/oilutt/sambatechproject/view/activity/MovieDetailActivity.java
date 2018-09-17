@@ -1,11 +1,16 @@
 package oilutt.sambatechproject.view.activity;
 
+import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -59,6 +64,27 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailActi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_movie, menu);
+        if(presenter.isFav()) {
+            menu.getItem(0).setIcon(R.drawable.ic_fav_on);
+        } else {
+            menu.getItem(0).setIcon(R.drawable.ic_fav);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.fav:
+                presenter.clickFav();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @OnClick(R.id.img_movie)
@@ -145,5 +171,10 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailActi
         dialog.setArguments(args);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         dialog.show(ft, ImageFullScreenDialog.TAG);
+    }
+
+    @Override
+    public void changeFavColor() {
+        invalidateOptionsMenu();
     }
 }

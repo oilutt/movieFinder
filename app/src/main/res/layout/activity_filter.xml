@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:drawableEnd="@drawable/ic_fav"
+            android:drawableEnd="@drawable/ic_review"
             android:drawablePadding="5dp"
             android:text="@string/average_desc" />
 
@@ -63,6 +63,31 @@
             android:text="@string/release_desc" />
 
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/txt_filter_by"
+        style="@style/TextBold16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/filter_by"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rg_order_by" />
+
+    <RadioButton
+        android:id="@+id/rb_fav"
+        style="@style/TextRegular14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:drawableEnd="@drawable/ic_fav"
+        android:drawablePadding="5dp"
+        android:text="@string/favoritos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_filter_by"/>
 
     <Button
         android:id="@+id/btn_filter"

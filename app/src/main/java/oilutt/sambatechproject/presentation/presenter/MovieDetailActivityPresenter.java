@@ -8,6 +8,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
 import java.util.Date;
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -28,6 +29,7 @@ public class MovieDetailActivityPresenter extends MvpPresenter<MovieDetailActivi
 
     private Context mContext;
     private Movie mMovie;
+    private boolean isFav = false;
 
     public MovieDetailActivityPresenter(Intent intent, Context context) {
         mContext = context;
@@ -62,6 +64,7 @@ public class MovieDetailActivityPresenter extends MvpPresenter<MovieDetailActivi
 
     private void handleMovie(Movie movie) {
         mMovie = movie;
+        verifyFav();
         getViewState().setTitle(movie.getTitle());
         getViewState().setDescription(movie.getOverview());
         getViewState().setTagline(movie.getTagline());
@@ -94,5 +97,35 @@ public class MovieDetailActivityPresenter extends MvpPresenter<MovieDetailActivi
         Configuration.ConfigImages configImages = PreferencesManager.getInstance().getConfiguration().getConfigImages();
         String urlImage = configImages.getSecureBaseUrl() + configImages.getPosterSizes().get(5) + "/" + mMovie.getPosterPath();
         getViewState().showImage(urlImage);
+    }
+
+    public void clickFav() {
+        if(isFav) {
+            PreferencesManager.getInstance().removeMovie(mMovie.getId());
+            isFav = false;
+            Toast.makeText(mContext, R.string.unfav, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mContext, R.string.favorited, Toast.LENGTH_SHORT).show();
+            PreferencesManager.getInstance().setFavMovie(mMovie);
+            isFav = true;
+        }
+        getViewState().changeFavColor();
+    }
+
+    private void verifyFav() {
+        List<Movie> list = PreferencesManager.getInstance().getFavMovies();
+        if(list != null && list.size() > 0) {
+            for (Movie movie : list) {
+                if (movie.getId() == mMovie.getId()) {
+                    isFav = true;
+                    getViewState().changeFavColor();
+                    break;
+                }
+            }
+        }
+    }
+
+    public boolean isFav() {
+        return isFav;
     }
 }

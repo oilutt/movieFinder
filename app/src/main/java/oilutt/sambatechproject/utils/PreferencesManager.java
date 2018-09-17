@@ -5,13 +5,18 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import oilutt.sambatechproject.app.Constants;
 import oilutt.sambatechproject.model.Configuration;
+import oilutt.sambatechproject.model.Movie;
 
 /**
  * Created by oilut on 21/08/2017.
@@ -137,5 +142,35 @@ public final class PreferencesManager {
         Gson gson = new Gson();
         String json = mPref.getString(Constants.SharedPreferences.CONFIG, "");
         return gson.fromJson(json, Configuration.class);
+    }
+
+    public void setFavMovie(Movie movie) {
+        List<Movie> list = getFavMovies();
+        if(list == null) {
+            list = new ArrayList<>();
+        }
+        list.add(movie);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        mPref.edit().putString(Constants.SharedPreferences.LIST_FAV_MOVIES, json).apply();
+    }
+
+    public void removeMovie(int movieId) {
+        List<Movie> list = getFavMovies();
+        for (Movie movie: list) {
+            if(movie.getId() == movieId) {
+                list.remove(movie);
+            }
+        }
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        mPref.edit().putString(Constants.SharedPreferences.LIST_FAV_MOVIES, json).apply();
+    }
+
+    public List<Movie> getFavMovies() {
+        Gson gson = new Gson();
+        String json = mPref.getString(Constants.SharedPreferences.LIST_FAV_MOVIES, "");
+        return gson.fromJson(json, new TypeToken<ArrayList<Movie>>() {
+        }.getType());
     }
 }

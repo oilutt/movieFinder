@@ -33,4 +33,6 @@ public interface MovieDetailActivityPresenterView extends MvpView {
     void goBack();
 
     void showImage(String url);
+
+    void changeFavColor();
 }
