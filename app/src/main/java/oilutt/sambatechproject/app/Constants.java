@@ -1,9 +1,11 @@
 package oilutt.sambatechproject.app;
 
+import oilutt.sambatechproject.BuildConfig;
+
 public class Constants {
 
     public static final String URL_BASE = "https://api.themoviedb.org/3/";
-    public static final String THE_MOVIEDB_API_KEY = "17741933e61920f90034102728d9d170";
+    public static final String THE_MOVIEDB_API_KEY = BuildConfig.APIKEY;
     public static final String LANGUAGE = "pt-br";
 
     public class SharedPreferences {
