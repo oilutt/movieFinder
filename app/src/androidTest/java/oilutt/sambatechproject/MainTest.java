@@ -35,6 +35,8 @@ public class MainTest extends AbstractActivityViewTest {
 
     @Test
     public void testMovieDetailActivity() throws Exception {
+        //O TEMPO DE LOADING ATRAPALHA O TESTE
+        waitId(R.id.rv_movies, 2000);
         onView(withRecyclerView(R.id.rv_movies).atPosition(1)).perform(waitId(R.id.rv_movies, 2000), click());
 
         onView(withId(R.id.fav)).perform(click());
@@ -52,7 +54,7 @@ public class MainTest extends AbstractActivityViewTest {
     @Test
     public void testFilterActivity() throws Exception {
         onView(withId(R.id.filter)).perform(click());
-        matchToolbarTitle(getActivityInstance().getString(R.id.filter));
+        matchToolbarTitle(getActivityInstance().getString(R.string.filter));
 
         onView(withId(R.id.rb_popularity)).perform(click());
         onView(withId(R.id.rb_popularity)).check(matches(isChecked()));
@@ -71,7 +73,7 @@ public class MainTest extends AbstractActivityViewTest {
     @Test
     public void testFilterFavActivity() throws Exception {
         onView(withId(R.id.filter)).perform(click());
-        matchToolbarTitle(getActivityInstance().getString(R.id.filter));
+        matchToolbarTitle(getActivityInstance().getString(R.string.filter));
 
         onView(withId(R.id.rb_fav)).perform(click());
         onView(withId(R.id.rb_fav)).check(matches(isChecked()));
@@ -83,6 +85,6 @@ public class MainTest extends AbstractActivityViewTest {
 
     @Test
     public void testMainActivity() throws Exception {
-        matchToolbarTitle(getActivityInstance().getString(R.id.txt_app_name));
+        matchToolbarTitle(getActivityInstance().getString(R.string.app_name));
     }
 }

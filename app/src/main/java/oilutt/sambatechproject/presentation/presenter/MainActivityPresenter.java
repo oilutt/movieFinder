@@ -111,9 +111,6 @@ public class MainActivityPresenter extends MvpPresenter<MainActivityPresenterVie
                 page = 0;
                 if (!fav) {
                     switch (orderBy) {
-                        case 0:
-                            getMovies();
-                            break;
                         case R.id.rb_popularity:
                             getMoviesOrderBy(Constants.SortBy.POPULARITY);
                             break;
@@ -122,6 +119,9 @@ public class MainActivityPresenter extends MvpPresenter<MainActivityPresenterVie
                             break;
                         case R.id.rb_release:
                             getMoviesOrderBy(Constants.SortBy.RELEASE);
+                            break;
+                        default:
+                            getMovies();
                             break;
                     }
                 } else {
@@ -225,10 +225,10 @@ public class MainActivityPresenter extends MvpPresenter<MainActivityPresenterVie
         List<Movie> list = PreferencesManager.getInstance().getFavMovies();
         switch (orderBy) {
             case Constants.SortBy.POPULARITY:
-                Collections.sort(list, (o1, o2) -> Double.compare(o1.getPopularity(), o2.getPopularity()));
+                Collections.sort(list, (o1, o2) -> Double.compare(o2.getPopularity(), o1.getPopularity()));
                 break;
             case Constants.SortBy.RATE:
-                Collections.sort(list, (o1, o2) -> Double.compare(o1.getVoteAverage(), o2.getVoteAverage()));
+                Collections.sort(list, (o1, o2) -> Double.compare(o2.getVoteAverage(), o1.getVoteAverage()));
                 break;
             case Constants.SortBy.RELEASE:
                 Collections.sort(list, (o1, o2) -> {

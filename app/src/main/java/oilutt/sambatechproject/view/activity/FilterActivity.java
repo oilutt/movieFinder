@@ -19,6 +19,7 @@ import oilutt.sambatechproject.app.Constants;
 import oilutt.sambatechproject.presentation.presenter.FilterActivityPresenter;
 import oilutt.sambatechproject.presentation.view.FilterActivityPresenterView;
 import oilutt.sambatechproject.utils.AnimationUtils;
+import oilutt.sambatechproject.utils.PreferencesManager;
 
 public class FilterActivity extends BaseActivity implements FilterActivityPresenterView {
 
@@ -28,6 +29,12 @@ public class FilterActivity extends BaseActivity implements FilterActivityPresen
     RadioGroup rgOrderBy;
     @BindView(R.id.rb_fav)
     RadioButton rbFav;
+    @BindView(R.id.rb_popularity)
+    RadioButton rbPopularity;
+    @BindView(R.id.rb_average_votes)
+    RadioButton rbRate;
+    @BindView(R.id.rb_release)
+    RadioButton rbRelease;
 
     @InjectPresenter
     FilterActivityPresenter presenter;
@@ -50,6 +57,8 @@ public class FilterActivity extends BaseActivity implements FilterActivityPresen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.clear:
+                PreferencesManager.getInstance().remove(Constants.SharedPreferences.FAV_SELECTED);
+                PreferencesManager.getInstance().remove(Constants.SharedPreferences.ORDER_BY_INT);
                 Intent intent = new Intent();
                 intent.putExtra(Constants.Extras.ORDER_BY, 0);
                 setResult(Activity.RESULT_OK, intent);
@@ -72,10 +81,35 @@ public class FilterActivity extends BaseActivity implements FilterActivityPresen
 
     @OnClick(R.id.btn_filter)
     public void onClickFilter() {
+        presenter.clickFilter(rgOrderBy.getCheckedRadioButtonId(), rbFav.isChecked());
+    }
+
+    @Override
+    public void clickFilter() {
         Intent intent = new Intent();
         intent.putExtra(Constants.Extras.ORDER_BY, rgOrderBy.getCheckedRadioButtonId());
         intent.putExtra(Constants.Extras.FILTER_BY, rbFav.isChecked());
         setResult(Activity.RESULT_OK, intent);
         finish();
+    }
+
+    @Override
+    public void setOrderBySelected(int rbId) {
+        switch(rbId) {
+            case R.id.rb_popularity:
+                rbPopularity.setChecked(true);
+                break;
+            case R.id.rb_average_votes:
+                rbRate.setChecked(true);
+                break;
+            case R.id.rb_release:
+                rbRelease.setChecked(true);
+                break;
+        }
+    }
+
+    @Override
+    public void setFavSelected() {
+        rbFav.setChecked(true);
     }
 }

@@ -20,6 +20,7 @@ import oilutt.sambatechproject.R;
 import oilutt.sambatechproject.app.Constants;
 import oilutt.sambatechproject.presentation.presenter.MainActivityPresenter;
 import oilutt.sambatechproject.presentation.view.MainActivityPresenterView;
+import oilutt.sambatechproject.utils.PreferencesManager;
 import oilutt.sambatechproject.view.adapter.MoviesAdapter;
 
 import static android.view.View.GONE;
@@ -48,6 +49,13 @@ public class MainActivity extends BaseActivity implements MainActivityPresenterV
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         setUpToolbarText(R.string.app_name, false);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferencesManager.getInstance().remove(Constants.SharedPreferences.FAV_SELECTED);
+        PreferencesManager.getInstance().remove(Constants.SharedPreferences.ORDER_BY_INT);
     }
 
     @Override

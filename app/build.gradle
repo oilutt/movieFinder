@@ -11,6 +11,14 @@ def getApiKey() {
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
+    signingConfigs {
+        config {
+            keyAlias 'sambatechproject'
+            keyPassword 'sambatechproject'
+            storeFile file('F:/Projetos/SambaTechProject/app/sambatechproject.jks')
+            storePassword 'sambatechprojct'
+        }
+    }
     defaultConfig {
         applicationId "oilutt.sambatechproject"
         minSdkVersion 19
@@ -21,11 +29,13 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "APIKEY", "\""+getApiKey()+"\""
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
         }
     }
     compileOptions {
@@ -35,8 +45,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

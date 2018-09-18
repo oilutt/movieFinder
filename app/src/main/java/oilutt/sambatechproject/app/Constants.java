@@ -12,6 +12,8 @@ public class Constants {
         public static final String PREFERENCES_NAME = "sambatechproject_ppreferences";
         public static final String CONFIG = "CONFIG";
         public static final String LIST_FAV_MOVIES = "LIST_FAV_MOVIES";
+        public static final String ORDER_BY_INT = "ORDER_BY_INT";
+        public static final String FAV_SELECTED = "FAV_SELECTED";
     }
 
     public class Retrofit {
