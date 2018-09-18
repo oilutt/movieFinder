@@ -17,7 +17,7 @@
     <string name="popularity">Popularidade:</string>
     <string name="duration">Duração:</string>
     <string name="favorited">O filme foi adicionado aos favoritos!</string>
-    <string name="unfav">O filme foi adicionado aos favoritos!</string>
+    <string name="unfav">O filme foi removido dos favoritos!</string>
 
     <string name="montserratBold">assets/Montserrat-Bold.ttf</string>
     <string name="montserratRegular">assets/Montserrat-Regular.ttf</string>
