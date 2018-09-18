@@ -1,6 +1,7 @@
 package oilutt.sambatechproject.view.activity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,7 +48,6 @@ public class MainActivity extends BaseActivity implements MainActivityPresenterV
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         setUpToolbarText(R.string.app_name, false);
-        fadeInFadeOut();
     }
 
     @Override
@@ -74,6 +74,19 @@ public class MainActivity extends BaseActivity implements MainActivityPresenterV
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         presenter.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+            rvMovies.setLayoutManager(layoutManager);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+            rvMovies.setLayoutManager(layoutManager);
+        }
     }
 
     @Override

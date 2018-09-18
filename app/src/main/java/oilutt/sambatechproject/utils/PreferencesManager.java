@@ -157,9 +157,9 @@ public final class PreferencesManager {
 
     public void removeMovie(int movieId) {
         List<Movie> list = getFavMovies();
-        for (Movie movie: list) {
-            if(movie.getId() == movieId) {
-                list.remove(movie);
+        for (int x=0; x < list.size(); x++) {
+            if(list.get(x).getId() == movieId) {
+                list.remove(x);
             }
         }
         Gson gson = new Gson();
